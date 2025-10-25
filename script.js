@@ -9,11 +9,12 @@ window.onload = ( ) => {
 
 addBtn.addEventListener("click", ( ) => {
     const taskText = taskInput.value.trim();
-    if (taskText === " ") return;
+    if (taskText === "") return;
 
     addTaskToList(taskText);
     saveTasks();
-    taskInput.value = " ";
+    taskInput.value = "";
+    updateCount();
 });
 
 function addTaskToList(taskText) {
@@ -23,13 +24,45 @@ function addTaskToList(taskText) {
     li.addEventListener("click", () => {
         li.classList.toggle("completed");
         saveTasks();
+        updateCount();
     });
+
+    li.addEventListener('dblclick', function () {
+    const currentText = li.firstChild.textContent.trim();
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentText;
+    input.classList.add('edit-input');
+
+    
+    li.textContent = '';
+    li.appendChild(input);
+    input.focus();
+
+    const saveEdit = () => {
+        const newText = input.value.trim() || currentText;
+
+        li.textContent = newText;
+        li.appendChild(deleteBtn);
+        saveTasks();
+    };
+
+    input.addEventListener('blur', saveEdit);
+    input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            saveEdit();
+            input.blur();
+        }
+    });
+});
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "✖";
     deleteBtn.addEventListener("click", () => {
         li.remove();
         saveTasks();
+        updateCount();
     });
 
     li.appendChild(deleteBtn);
@@ -55,7 +88,7 @@ function updateCount() {
 updateCount();
 
 document.getElementById("clearAll").addEventListener("click", () => {
-    taskList.innerHTML = " ";
+    taskList.innerHTML = "";
     saveTasks();
 });
 
