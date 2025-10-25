@@ -1,31 +1,68 @@
 const taskInput = document.getElementById("taskInput");
+const taskDate = document.getElementById("taskDate");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
 
 window.onload = ( ) => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    savedTasks.forEach(addTaskToList);
+    savedTasks.forEach(task => addTaskToList(task.text, task.date, task.completed));
+    updateCount();
 };
 
-addBtn.addEventListener("click", ( ) => {
+addBtn.addEventListener("click", () => {
     const taskText = taskInput.value.trim();
+    const dateValue = taskDate.value;
+
     if (taskText === "") return;
 
     addTaskToList(taskText);
     saveTasks();
     taskInput.value = "";
+    taskDate.value = "";
     updateCount();
 });
 
-function addTaskToList(taskText) {
+function addTaskToList(taskText, dateValue = "", completed = false) {
     const li = document.createElement("li");
-    li.textContent = taskText;
+    li.className = completed ? "completed" : "";
+    /*li.textContent = taskText;
+
+    if (completed) {
+        li.classList.add("completed");
+    }*/
+
+    const textSpan = document.createElement("span");
+    textSpan.textContent = taskText;
+
+    const dateSpan = document.createElement("small");
+    if (dateValue) {
+        dateSpan.textContent = `Due: ${dateValue}`;
+        dateSpan.style.marginLeft = "10px";
+        dateSpan.style.fontSize = "0.9rem";
+        dateSpan.style.color = "#555";
+    }
+
+    li.appendChild(textSpan);
+    li.appendChild(dateSpan);
 
     li.addEventListener("click", () => {
         li.classList.toggle("completed");
         saveTasks();
         updateCount();
     });
+
+    const deleteBtn =document.createElement("button");
+    deleteBtn.textContent = "✖";
+    deleteBtn.addEventListener("click", () => {
+        li.remove();
+        saveTasks();
+        updateCount();
+    });
+
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+    updateCount();
+}
 
     li.addEventListener('dblclick', function () {
     const currentText = li.firstChild.textContent.trim();
@@ -68,13 +105,16 @@ function addTaskToList(taskText) {
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
     saveTasks();
-}
+
 
 function saveTasks() {
     const tasks = [];
     document.querySelectorAll("#taskList li").forEach(li => {
+        const text = li.querySelector("span").textContent;
+        const date = li.querySelector("small") ? li.querySelector("small").textContent.replace("Due: ", "") : "";
         tasks.push({
-            text: li.firstChild.textContent,
+            text, /*li.firstChild.textContent,*/
+            date,
             completed: li.classList.contains("completed")
         });
     });
@@ -114,4 +154,4 @@ filterButtons.forEach(btn => {
             }
         });
     });
-});
+}

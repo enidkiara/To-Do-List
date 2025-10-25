@@ -1,10 +1,24 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #dff3f7;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: linear-gradient(-45deg, #dceefb, #b3daff, #97c9f8);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .container {
@@ -61,7 +75,7 @@ h1 {
 }
 
 li {
-    background-color: #dff3f7;
+    background-color: #dceefb;
     padding: 8px 12px;
     margin-bottom: 10px;
     border-radius: 12px;
@@ -149,4 +163,12 @@ li:hover {
     background-color: #ecf6fc;
     padding: 5px;
     border-radius: 5px;
+}
+
+#taskDate {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
 }
