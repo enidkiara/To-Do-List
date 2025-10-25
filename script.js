@@ -53,3 +53,32 @@ function updateCount() {
     document.getElementById("taskCount").textContent = `${count} tasks left`;
 }
 updateCount();
+
+document.getElementById("clearAll").addEventListener("click", () => {
+    taskList.innerHTML = " ";
+    saveTasks();
+});
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const filter = btn.dataset.filter;
+        const tasks = document.querySelectorAll("#taskList li");
+
+        tasks.forEach(task => {
+            const isCompleted = task.classList.contains("completed");
+
+            if (filter === "all") {
+                task.style.display = "flex";
+            } else if (filter === "active") {
+                task.style.display = isCompleted ? "none" : "flex";
+            } else if (filter === "completed") {
+                task.style.display = isCompleted ? "flex" : "none";
+            }
+        });
+    });
+});
