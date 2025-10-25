@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-color:aliceblue;
     display: flex;
     justify-content: center;
@@ -9,10 +9,15 @@ body {
 
 .container {
     background-color:white;
-    padding: 25px;
-    border-radius: 15px;
+    padding: 40px;
+    border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    width: 320px;
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
 }
 
 h1 {
@@ -39,6 +44,10 @@ h1 {
     border-radius: 8px;
     cursor: pointer;
 }
+
+#addBtn:hover {
+    background-color: #38a67a;
+  }
 
 #taskList {
     list-style: none;
