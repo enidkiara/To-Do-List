@@ -87,11 +87,6 @@ addBtn.addEventListener("click", () => {
         saveTasks();
         updateCount();
       }
-      
-    li.appendChild(deleteBtn);
-    taskList.appendChild(li);
-    saveTasks();
-
 
 function saveTasks() {
     const tasks = [];
