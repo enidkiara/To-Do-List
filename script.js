@@ -26,7 +26,7 @@ function addTaskToList(taskText) {
     });
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "❌";
+    deleteBtn.textContent = "✖";
     deleteBtn.addEventListener("click", () => {
         li.remove();
         saveTasks();
@@ -47,3 +47,9 @@ function saveTasks() {
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
+function updateCount() {
+    const count = document.querySelectorAll("#taskList li:not(.completed)").length;
+    document.getElementById("taskCount").textContent = `${count} tasks left`;
+}
+updateCount();
